@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <h3>Ofice reporting tool</h3>
+    
+
+    <div class="card card-body m-3">
+        <a href="{% url 'truck:selection' %}">Admission Selction</a>
+    </div>
+    
+    <div class="card card-body m-3">
+        <a href="{% url 'truck:exit' %}">Workshop Exit</a>
+    </div>
+    
+
+{% endblock content %}
