@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Truck, Selection, Exit
-from .forms import SelectionForm, ExitForm
+from .models import Truck, Selection, Exit, Admmission
+from .forms import SelectionForm, ExitForm, AdmmissionForm
 from datetime import datetime
 
 today = datetime.today()
@@ -16,11 +16,13 @@ def selection(request):
         'form' : SelectionForm(), 
         'selected_trucks': Selection.objects.filter(date__year=year, date__month=month, date__day=day)
     }
-    return render(request, 'admission.html', context)
+    return render(request, 'selection.html', context)
 
 def create_selection_form(request):
     if request.method == 'POST':
         cab_no = request.POST['cab_no']
+        cab_no=cab_no.upper()
+        cab_no=cab_no.replace(' ', '-')
         try:
             officer = Truck.objects.get(cab_no=cab_no).officer
         except:
@@ -32,7 +34,7 @@ def create_selection_form(request):
             selection.officer = officer
             selection.save()
             context = {'truck' : selection}
-            return render(request, 'partials/selection.html', context)
+            return render(request, 'partials/selection_list.html', context)
 
     return render(request, 'partials/form.html', {'form': SelectionForm})
 
@@ -46,6 +48,8 @@ def exit(request):
 def create_exit_form(request):
     if request.method == 'POST':
         cab_no = request.POST['cab_no']
+        cab_no=cab_no.upper()
+        cab_no=cab_no.replace(' ', '-')
         try:
             officer = Truck.objects.get(cab_no=cab_no).officer
         except:
@@ -59,5 +63,31 @@ def create_exit_form(request):
             context = {'truck' : exit}
             return render(request, 'partials/exit_list.html', context)
     return render(request, 'partials/exit_form.html', {'form': ExitForm})
+
+def admmission(request):
+    context = {
+        'form' : AdmmissionForm(),
+        'admmissions': Admmission.objects.filter(date__year=year, date__month=month, date__day=day)
+    }
+    return render(request, 'admmission.html', context)
+
+def create_admmission_form(request):
+    if request.method == 'POST':
+        cab_no = request.POST['cab_no']
+        cab_no=cab_no.upper()
+        cab_no=cab_no.replace(' ', '-')
+        try:
+            officer = Truck.objects.get(cab_no=cab_no).officer
+        except:
+            officer = None
+        form = AdmmissionForm(request.POST or None)
+        form.officer=officer
+        if form.is_valid():
+            admited = form.save(commit=False)
+            admited.officer = officer
+            admited.save()
+            context = {'truck' : admited}
+            return render(request, 'partials/admmission_list.html', context)
+    return render(request, 'partials/admmission_form.html', {'form': AdmmissionForm})
 
 

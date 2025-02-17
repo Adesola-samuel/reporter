@@ -4,34 +4,33 @@
 
 {% block content %}
 
-    <h3 class="mb-4 text-dark">Add Exiting Trucks</h1>
+    <h3 class="mb-4 text-dark">Add Admitted Trucks</h1>
 
-    <div id="exit-forms">
-        {% include 'partials/exit_form.html' %}
+    <div id="admmission-forms">
+        {% include 'partials/admmission_form.html' %}
     </div>
 
     <div class="my-4">
         <button class="btn btn-success md-2"
-            hx-get="{% url 'truck:create-exit-form' %}"
-            hx-target="#exit-forms"
+            hx-get="{% url 'truck:create-admmission-form' %}"
+            hx-target="#admmission-forms"
             hx-swap="beforeend"
             >
             + Add Trucks
         </button>
-        <button type='submit' class="btn btn-primary" id="submit-all-exits">Submit all</button>
+        <button type='submit' class="btn btn-primary" id="submit-all-admmissions">Submit all</button>
     
     </div>
     
     <div id="report-area">
-       *<b>INBOUND LOGISTICS RECEPTION UPDATE AT COB 6:00pm <span id="datetime"></span></b>* <br/>
-       _The following trucks have been released and have exit as at 6:00pm <span id="datetime2"></span>_
+       *<b>WORKSHOP UPDATE <span id="datetime"></span></b>* <br/>
+       _The following trucks have been admmitted into the workshop today <span id="datetime2"></span>_
        <br /> <br />
-        <ol id="exit-list">
-            {% for truck in exits %}
-                {% include 'partials/exit_list.html' %}
+        <ol id="admmission_list">
+            {% for truck in admmissions %}
+                {% include 'partials/admmission_list.html' %}
             {% endfor %}
         </ol>  
-        Total jobcards remaining: <br/>
 
         FOs, take note. <br/><br/>
 
@@ -47,7 +46,7 @@
         document.getElementById("datetime2").innerHTML = date.toDateString();
 
         function report(){
-            var divblock = $('.report').text();
+            var divblock = $('.report-area').text();
             window.open("https://api.whatsapp.com/send?text=" + divblock)
         }
 

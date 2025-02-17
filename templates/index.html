@@ -5,13 +5,22 @@
 {% block content %}
     <h3>Ofice reporting tool</h3>
     
+    <div class="card card-body m-3">
+        <a href="{% url 'truck:admmission' %}">
+            <h1>Workshop Admmission</h1>
+        </a>
+    </div>
 
     <div class="card card-body m-3">
-        <a href="{% url 'truck:selection' %}">Admission Selction</a>
+        <a href="{% url 'truck:selection' %}">
+            <h1>Workshop Selection</h1>
+        </a>
     </div>
     
     <div class="card card-body m-3">
-        <a href="{% url 'truck:exit' %}">Workshop Exit</a>
+        <a href="{% url 'truck:exit' %}">
+            <h1>Workshop Exit</h1>
+        </a>
     </div>
     
 

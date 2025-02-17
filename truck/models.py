@@ -8,6 +8,7 @@ class UpperCharField(models.CharField):
         value = getattr(model_instance, self.attname, None)
         if value:
             value = value.upper()
+            value = value.replace(' ', '-')
             setattr(model_instance, self.attname, value)
             return value
         else:
@@ -20,7 +21,7 @@ class Truck(models.Model):
     officer = models.CharField(max_length=25, null=True, blank=True)
     
     def __str__(self):
-        return f"{self.cab_no} -- {self.officer}"
+        return f"{self.cab_no} : {self.officer}"
 
 
 class Selection(models.Model):
@@ -38,4 +39,12 @@ class Exit(models.Model):
     date = models.DateField(auto_now_add =True)
 
     def __str__(self):
-        return f"{self.cab_no} {self.officer}"
+        return f"{self.cab_no} {self.officer} {self.date}"
+    
+class Admmission(models.Model):
+    cab_no = UpperCharField(max_length=14)
+    officer = models.CharField(max_length=25, null=True, blank=True)
+    date = models.DateField(auto_now_add =True)
+
+    def __str__(self):
+        return f"{self.cab_no} {self.officer} {self.date}"

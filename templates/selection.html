@@ -21,10 +21,11 @@
     </div>
     
     <div id="report-area">
-       <b>INBOUND NON-OPS REPORT <br/>TRUCKS THAT ARE GOING TO BE ADMITTED INTO WORKSHOP TOMORROW <span id="date"></span></b> <br/>
+       <b>*INBOUND NON-OPS REPORT*</b> <br/>
+        _TRUCKS THAT ARE GOING TO BE ADMITTED INTO WORKSHOP TOMORROW <span id="date"></span>_ <br /> <br />
         <ol id="selection-list">
             {% for truck in selected_trucks %}
-                {% include 'partials/selection.html' %}
+                {% include 'partials/selection_list.html' %}
             {% endfor %}
         </ol>  
         Total jobcards remaining: <br/>
