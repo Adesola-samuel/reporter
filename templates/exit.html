@@ -28,10 +28,10 @@
        <br /> <br />
         <ol id="exit-list">
             {% for truck in exits %}
-                {% include 'partials/exit_list.html' %}
+                {% include 'partials/exit_list.html' %} <br>
             {% endfor %}
         </ol>  
-        Total jobcards remaining: <br/>
+        <br/>
 
         FOs, take note. <br/><br/>
 
@@ -47,7 +47,7 @@
         document.getElementById("datetime2").innerHTML = date.toDateString();
 
         function report(){
-            var divblock = $('.report').text();
+            var divblock = $('.report-area').text();
             window.open("https://api.whatsapp.com/send?text=" + divblock)
         }
 

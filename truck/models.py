@@ -19,15 +19,17 @@ class Truck(models.Model):
     cab_no = UpperCharField(max_length=14)
     truck_no = models.CharField(max_length=14, null=True, blank=True)
     officer = models.CharField(max_length=25, null=True, blank=True)
+    fleet = models.CharField(max_length=14, null=True, blank=True)
     
     def __str__(self):
-        return f"{self.cab_no} : {self.officer}"
+        return f"{self.cab_no} : {self.officer} : {self.fleet}"
 
 
 class Selection(models.Model):
     cab_no = UpperCharField(max_length=14)
     officer = models.CharField(max_length=25, null=True, blank=True)
     date = models.DateField(auto_now_add =True)
+    fleet = models.CharField(max_length=14, null=True, blank=True)
 
     def __str__(self):
         return f"{self.cab_no} {self.officer}"
@@ -36,6 +38,7 @@ class Selection(models.Model):
 class Exit(models.Model):
     cab_no = UpperCharField(max_length=14)
     officer = models.CharField(max_length=25, null=True, blank=True)
+    fleet = models.CharField(max_length=14, null=True, blank=True)
     date = models.DateField(auto_now_add =True)
 
     def __str__(self):
@@ -44,7 +47,8 @@ class Exit(models.Model):
 class Admmission(models.Model):
     cab_no = UpperCharField(max_length=14)
     officer = models.CharField(max_length=25, null=True, blank=True)
+    fleet = models.CharField(max_length=14, null=True, blank=True)
     date = models.DateField(auto_now_add =True)
 
     def __str__(self):
-        return f"{self.cab_no} {self.officer} {self.date}"
+        return f"{self.cab_no} {self.officer} {self.date} {self.fleet}"
