@@ -1,10 +1,13 @@
 from django.shortcuts import render
 from .models import Truck, Selection, Exit, Admmission
 from .forms import SelectionForm, ExitForm, AdmmissionForm
-from datetime import datetime
+from datetime import datetime, timedelta
 
 today = datetime.today()
 year=today.year; month =today.month; day=today.day
+
+yesterday = today - timedelta(days=1)
+yesterday_year=yesterday.year; yesterday_month=yesterday.month; yesterday_day=yesterday.day
 
 # Create your views here.
 def index(request):
@@ -87,9 +90,14 @@ def create_exit_form(request):
     return render(request, 'partials/exit_form.html', {'form': ExitForm})
 
 def admmission(request):
+    selected_yesterday = Selection.objects.filter(date__year=yesterday_year, date__month=yesterday_month, date__day=yesterday_day)
+    admmissions = Admmission.objects.filter(date__year=year, date__month=month, date__day=day).order_by('fleet', 'officer').values()
+    admmitted_cab_nos = admmissions.values_list('cab_no')
+    selected_not_admitted = selected_yesterday.exclude(cab_no__in=admmitted_cab_nos).order_by('fleet', 'officer').values()
     context = {
         'form' : AdmmissionForm(),
-        'admmissions': Admmission.objects.filter(date__year=year, date__month=month, date__day=day).order_by('fleet', 'officer').values()
+        'admmissions': admmissions,
+        'not_admited_cabs': selected_not_admitted
     }
     return render(request, 'admmission.html', context)
 

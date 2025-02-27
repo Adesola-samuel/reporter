@@ -26,12 +26,23 @@
        *<b>WORKSHOP UPDATE <span id="datetime"></span></b>* <br/>
        _The following trucks have been admmitted into the workshop today <span id="datetime2"></span>_
        <br /> <br />
+
+       <!-- LIST OF ADMMITTED TRUCKS -->
         <ol id="admmission_list">
             {% for truck in admmissions %}
                 {% include 'partials/admmission_list.html' %} <br>
             {% endfor %}
         </ol>  
-        <br>
+        <br><br>
+
+        <!-- LIST OF SELECTED BUT NOT ADMITTED TRUCKS -->
+        <b>_*Drivers not seen for entry*_</b> <br>
+        <ol>
+            {% for truck in not_admited_cabs %}
+                {% include 'partials/not_admmitted_list.html' %} <br>
+            {% endfor %}
+        </ol>
+        <br><br>
         FOs, take note. <br/><br/>
 
         Thank you. <br/>
