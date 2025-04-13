@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <h3>Ofice reporting tool</h3>
+<div class="row text-center">
+    <div class="item col col-md-4 card card-body">
+        <a href="{% url 'truck:admmission' %}">
+            <h4>Workshop Admmission</h4>
+        </a>
+    </div>
+
+    <div class="item col col-md-4 card card-body">
+        <a href="{% url 'truck:selection' %}">
+            <h4>Workshop Selection</h4>
+        </a>
+    </div>
+    
+    <div class="item col col-md-4 card card-body">
+        <a href="{% url 'truck:exit' %}">
+            <h4>Workshop Exit</h4>
+        </a>
+    </div>
+
+    <div class="item col col-md-4 card card-body">
+        <a href="{% url 'admin:index' %}">
+            <h4>View Admin</h4>
+        </a>
+    </div>
+
+    <div class="item col col-md-4 card card-body">
+        <a href="{% url 'truck:reservation-file-form' %}">
+            <h4>Job Reservation</h4>
+        </a>
+    </div>
+    <div class="item col col-md-4 card card-body">
+        <a href="{% url 'truck:update-trucks' %}">
+            <h4>Update Trucks</h4>
+        </a>
+    </div>
+</div>
+    <style>
+        .item a{
+            text-decoration:none;
+            color:black;
+            text-align:center;
+            transition: 0.2s;
+        }
+        .item:hover{
+            background:rgb(43, 41, 41);
+            color:white;
+        }
+        .item:hover a{
+            color:white;
+        }
+        .item{transition: 0.2s;}
+    </style>
+
+{% endblock content %}

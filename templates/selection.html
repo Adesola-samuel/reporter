@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+    <h3 class="mb-4 text-dark">Add Selected Trucks</h1>
+
+    <div id="selection-forms">
+        {% include 'partials/form.html' %}
+    </div>
+
+    <div class="my-4">
+        <button class="btn btn-success md-2"
+            hx-get="{% url 'truck:create-selection-form' %}"
+            hx-target="#selection-forms"
+            hx-swap="beforeend"
+            >+ Add Trucks
+        </button>
+        <button type='submit' class="btn btn-primary" id="submit-all">Submit all</button>
+    </div>
+    
+    <div id="report-area">
+       <b>*INBOUND NON-OPS REPORT*</b> <br/>
+        _TRUCKS THAT ARE GOING TO BE ADMITTED INTO WORKSHOP TOMORROW <span id="date"></span>_ <br /> <br />
+        <ol id="selection-list">
+            {% for truck in selected_trucks %}
+                {% include 'partials/selection_list.html' %} <br>
+            {% endfor %}
+        </ol>  
+        Total jobcards remaining: <br/>
+
+        FOs, take note. <br/><br/>
+
+        Respectively <br/>
+       <b> _*{{request.user.first_name}} {{request.user.last_name}}*_ </b>
+
+    </div>
+
+    <script type="text/javascript">
+        const today = new Date()
+        const tomorrow = new Date(today)
+        tomorrow.setDate(today.getDate()+ 1)
+        document.getElementById("date").innerHTML = tomorrow.toDateString();
+
+        function report(){
+            var divblock = $('.report-area').text();
+            window.open("https://api.whatsapp.com/send?text=" + divblock)
+        }
+
+        function copyText(){
+            const info = document.getElementById('report-area').innerText;
+            navigator.clipboard.writeText(info);
+
+            alert('Copied!')
+        }
+    </script>
+
+<div class="row">
+    <div class="col col-md col-md-3">
+        <div id="button" onclick="report()">
+            <button class="btn btn-sm btn-success">Send to whatsapp</button>
+        </div>
+    </div>
+    <div class="col col-md col-md-3">
+        <div id="copy" onclick="copyText()">
+            <button class="btn btn-sm btn-outline-dark">Copy to clipboard</button>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

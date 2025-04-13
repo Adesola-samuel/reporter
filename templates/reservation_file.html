@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .tab{display:inline-block;margin-left:0.05em;}
+</style>
+
+<div class="card card-body m-2 p-2 bg-dark text-light">
+    <h1 class="">Update Reservation</h1>
+</div>
+
+<div class="container text-center">
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+<div class="row p-3 m-2 bg-light">
+        <div class="col-8 col-md-8">
+            <label for="{{form.data_file.id_for_label}}">{{form.data_file.label}}</label>
+            {{form.data_file}}
+        </div>
+        <div class="col-2 col-md-2 align-self-end">
+            <input type="submit" class="btn btn-outline-dark">
+        </div>
+    </form>
+
+    <h4 class="text-success">{{feedback}}</h4>
+    {% if messages %}
+    {% for message in messages %}
+    {{message}}
+    {% endfor %}
+    {% endif %}
+</div>
+
+</div>
+
+<div class="container">
+    <div id="report-area">
+        *<b>INBOUND LOGISTICS NON OPS DAILY UPDATE | WORK ORDER <span id="datetime"></span></b>* <br/>
+        _The following trucks created workshop reservations today <span id="datetime2"></span>_
+        <br /> <br />
+         <ol id="reservation-list"> <br>
+		 _Repeating cab numbers implies tractor and body respectively_
+		 <br>
+            <h6>To workshop</h6>
+             {% for record in twks %}
+                <li>
+                    - {{record.cab_no}}:{{record.notification}} <span class="tab"></span>
+                    {% if not record.officer == None %}
+                        {{record.officer}}
+                    {% endif %}
+
+                    {% if not record.fleet == None %}
+                        :{{record.fleet.lower}}
+                    {% endif %} 
+                </li>
+             {% endfor %}
+             <h6>Highway Breakdown</h6>
+             {% for record in hbds %}
+                <li>
+                    - {{record.cab_no}}:{{record.notification}} <span class="tab"></span>
+                    {% if not record.officer == None %}
+                        {{record.officer}}
+                    {% endif %}
+
+                    {% if not record.fleet == None %}
+                        :{{record.fleet.lower}}
+                    {% endif %} 
+                </li>
+             {% endfor %}
+         </ol>  
+         
+         *Summary*
+         <ul>
+            <li>HBDS : {{n_hbds}}</li>
+            <li>To workshop : {{n_twks}}</li>
+            <li>HBDS (CNG) : {{n_hbds}}</li>
+            <li>To workshop (CNG) : {{n_twks}}</li>
+            <li>Total : {{sum}}</li>
+         </ul>
+         
+         
+
+    
+         FOs, take note. <br/>
+    
+         Thank you. <br/>
+        <b> _*{{request.user.first_name}} {{request.user.last_name}}*_ </b>
+    
+     </div>
+    
+     <script type="text/javascript">
+         const today = new Date()
+         const date = new Date(today)
+         document.getElementById("datetime").innerHTML = date.toDateString();
+         document.getElementById("datetime2").innerHTML = date.toDateString();
+    
+         function report(){
+             var divblock = $('#report-area').text();
+             window.open("https://api.whatsapp.com/send?text=" + divblock)
+         }
+    
+         function copyText(){
+             const info = document.getElementById('report-area').innerText;
+             navigator.clipboard.writeText(info);
+    
+             alert('Copied!')
+         }
+     </script>
+    
+    <div class="row">
+     <div class="col col-md col-md-3">
+         <div id="button" onclick="report()">
+             <button class="btn btn-sm btn-success">Send to whatsapp</button>
+         </div>
+     </div>
+     <div class="col col-md col-md-3">
+         <div id="copy" onclick="copyText()">
+             <button class="btn btn-sm btn-outline-dark">Copy to clipboard</button>
+         </div>
+     </div>
+    </div>
+    
+</div>
+{% endblock content %}

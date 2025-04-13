@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="card card-body m-2 p-2 bg-dark text-light">
+        <h1 class="">Update Truck Records</h1>
+    </div>
+<div class="container text-center">
+
+    
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+<div class="row p-3 m-2 bg-light">
+        <div class="col-8 col-md-8">
+            <label for="{{form.data_file.id_for_label}}">{{form.data_file.label}}</label>
+            {{form.data_file}}
+        </div>
+        <div class="col-2 col-md-2 align-self-end">
+            <input type="submit" class="btn btn-outline-dark">
+        </div>
+    </form>
+
+    <h4 class="text-success">{{feedback}}</h4>
+    {% if messages %}
+    {% for message in messages %}
+    {{message}}
+    {% endfor %}
+    {% endif %}
+</div>
+
+
+</div>
+
+{% endblock content %}
+
